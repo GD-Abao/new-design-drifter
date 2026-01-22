@@ -1,0 +1,44 @@
+---
+// Theme Toggle Component
+// 使用 Tailwind CSS dark mode (class strategy)
+---
+
+<button id="theme-toggle" type="button" aria-label="切換深色模式">
+	<slot>
+		<!-- 預設圖示，可透過 slot 自訂 -->
+		<span class="dark:hidden">🌙</span>
+		<span class="hidden dark:inline">☀️</span>
+	</slot>
+</button>
+
+<script is:inline>
+	const toggle = document.getElementById("theme-toggle");
+	const html = document.documentElement;
+
+	// 初始化：檢查 localStorage 或系統偏好
+	function initTheme() {
+		const stored = localStorage.getItem("theme");
+		if (
+			stored === "dark" ||
+			(!stored && window.matchMedia("(prefers-color-scheme: dark)").matches)
+		) {
+			html.classList.add("dark");
+		} else {
+			html.classList.remove("dark");
+		}
+	}
+
+	// 切換主題
+	function toggleTheme() {
+		if (html.classList.contains("dark")) {
+			html.classList.remove("dark");
+			localStorage.setItem("theme", "light");
+		} else {
+			html.classList.add("dark");
+			localStorage.setItem("theme", "dark");
+		}
+	}
+
+	initTheme();
+	toggle?.addEventListener("click", toggleTheme);
+</script>

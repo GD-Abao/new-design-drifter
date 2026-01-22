@@ -1,0 +1,128 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { CATEGORIES, AUTHOR } from "../../config";
+import { Image } from "astro:assets";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("blog");
+
+	return posts
+		.filter((post: any) => !post.data.draft)
+		.map((post: any) => {
+			const date = new Date(post.data.pubDate);
+			const dateStr = date.toISOString().slice(0, 10).replace(/-/g, "");
+
+			const fileName = post.id.split("/").pop() || post.id;
+			const slug = `${dateStr}-${fileName}`;
+
+			return {
+				params: {
+					category: post.data.category,
+					slug,
+				},
+				props: { post },
+			};
+		});
+}
+
+const { post }: any = Astro.props;
+const { Content, headings } = await render(post);
+const {
+	title,
+	description,
+	category,
+	pubDate,
+	updatedDate,
+	image,
+	imageAlt,
+	tags,
+} = post.data;
+const categoryName = CATEGORIES[category as keyof typeof CATEGORIES];
+---
+
+<Layout
+	title={title}
+	description={description}
+	image={image}
+	imageAlt={imageAlt || title}
+	type="article"
+	publishedTime={pubDate.toISOString()}
+	modifiedTime={updatedDate?.toISOString()}
+	section={categoryName}
+	tags={tags}
+>
+	<section class="p-10">
+		<article class="max-w-7xl mx-auto space-y-16 prose">
+			<header class="space-y-2">
+				<div>
+					<h1 class="text-3xl">{title}</h1>
+					{description && <p class="text-sm opacity-60">{description}</p>}
+				</div>
+
+				<div>
+					{
+						image && (
+							<Image
+								class="aspect-video object-cover rounded-xl"
+								src={image}
+								width={1200}
+								height={675}
+								alt={imageAlt || title}
+							/>
+						)
+					}
+				</div>
+			</header>
+
+			{
+				headings.length > 0 && (
+					<nav class="space-y-2" aria-label="Table of contents">
+						<h2 class="!text-sm opacity-60">目錄</h2>
+						<ul class="text-sm space-y-1">
+							{headings
+								.filter((heading) => heading.depth >= 2 && heading.depth <= 3)
+								.map((heading) => (
+									<li>
+										<a
+											class="opacity-60 hover:opacity-100 duration-300"
+											href={`#${heading.slug}`}
+										>
+											{heading.text}
+										</a>
+									</li>
+								))}
+						</ul>
+					</nav>
+				)
+			}
+
+			<div>
+				<Content />
+			</div>
+
+			<footer>
+				<div class="flex gap-x-2 text-sm">
+					<span>{AUTHOR.name}</span>
+					<div class="text-sm opacity-60 flex gap-x-4">
+						{
+							updatedDate && (
+								<time datetime={updatedDate.toISOString()}>
+									更新 {updatedDate.toLocaleDateString("zh-TW")}
+								</time>
+							)
+						}
+
+						<time datetime={pubDate.toISOString()}>
+							{pubDate.toLocaleDateString("zh-TW")}
+						</time>
+					</div>
+					<a
+						class="opacity-60 hover:opacity-100 duration-500"
+						href={`/${category}`}>{categoryName}</a
+					>
+				</div>
+			</footer>
+		</article>
+	</section>
+</Layout>

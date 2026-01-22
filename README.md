@@ -1,46 +1,28 @@
-# Astro Starter Kit: Basics
+# 漂流探索
 
-```sh
-npm create astro@latest -- --template basics
-```
+極簡黑白風格的個人部落格
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## TODO
 
-## 🚀 Project Structure
+- [ ] 建立基本 Layout 與共用元件 (Header, Footer)
+- [ ] 建立首頁 `/`
+- [ ] 建立 content collection 結構 (`src/content/blog/` + schema)
+- [ ] 建立分類系統 (遊戲、AI)
+- [ ] 建立部落格列表頁 `/blog`
+- [ ] 建立單篇文章頁 `/blog/[slug]`
+- [ ] 加入分頁功能
+- [ ] 加入搜尋 (Pagefind)
+- [ ] SEO 優化
 
-Inside of your Astro project, you'll see the following folders and files:
+## 分類
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+- `gaming` - 遊戲
+- `game-dev` - 遊戲開發
+- `ai-tools` - AI 工具
+- `ai-news` - AI 新聞
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 技術
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Astro 5
+- Content Collections (Markdown)
+- Pagefind (靜態搜尋)

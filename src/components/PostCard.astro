@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+	title: string;
+	href: string;
+	date: Date | string;
+	description?: string;
+	image?: string;
+	imageAlt?: string;
+}
+
+const { title, href, date, description, image, imageAlt } = Astro.props;
+const displayDate = new Date(date);
+---
+
+<article class="post-card">
+	<a href={href}>
+		{
+			image && (
+				<div class="py-2">
+					<Image
+						class="aspect-video object-cover rounded-xl"
+						src={image}
+						alt={imageAlt || title}
+						width={640}
+						height={360}
+					/>
+				</div>
+			)
+		}
+		<div>
+			<time class="text-xs opacity-60" datetime={displayDate.toISOString()}>
+				{displayDate.toLocaleDateString("zh-TW")}
+			</time>
+			<h3>{title}</h3>
+			{
+				description && (
+					<p class="opacity-60 text-sm py-1 line-clamp-2">{description}</p>
+				)
+			}
+		</div>
+	</a>
+</article>

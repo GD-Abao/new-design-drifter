@@ -1,13 +1,24 @@
 ---
+import type { GetStaticPaths } from "astro";
 import Layout from "../layouts/Layout.astro";
+import { CATEGORIES, PAGE_SIZE, type Category } from "../config";
+import { getCollection } from "astro:content";
 import PostCardList from "../components/PostCardList.astro";
 import Pagination from "../components/Pagination.astro";
-import { getCollection } from "astro:content";
 import { getPostHref } from "../utils/posts";
-import { PAGE_SIZE } from "../config";
+
+export const getStaticPaths: GetStaticPaths = () => {
+	return Object.keys(CATEGORIES).map((category) => ({
+		params: { category },
+	}));
+};
+
+const { category } = Astro.params;
+const categoryName = CATEGORIES[category as Category];
 
 const posts = (await getCollection("blog"))
 	.filter((post) => !post.data.draft)
+	.filter((post) => post.data.category === category)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
@@ -23,18 +34,15 @@ const items = pagePosts.map((post) => ({
 }));
 ---
 
-<Layout
-	title="遊戲與AI探索"
-	description="一個創作者的漂流地圖：遊戲開發、AI 工具與數位創作"
->
+<Layout title={categoryName} description={`${categoryName}相關文章`}>
 	<section class="p-10">
 		<div class="space-y-20">
 			<PostCardList items={items} />
 			<Pagination
 				currentPage={1}
 				totalPages={totalPages}
-				basePath="/"
-				pagePath="/page"
+				basePath={`/${category}`}
+				pagePath={`/${category}/page`}
 			/>
 		</div>
 	</section>

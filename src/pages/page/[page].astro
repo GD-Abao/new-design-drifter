@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PostCardList from "../../components/PostCardList.astro";
+import Pagination from "../../components/Pagination.astro";
+import { getCollection } from "astro:content";
+import { getPostHref } from "../../utils/posts";
+import { PAGE_SIZE } from "../../config";
+
+export async function getStaticPaths({ paginate }: { paginate: any }) {
+	const posts = (await getCollection("blog"))
+		.filter((post) => !post.data.draft)
+		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+	return paginate(posts, { pageSize: PAGE_SIZE }).filter((entry: any) => {
+		const page = entry.params.page;
+		return page !== 1 && page !== "1";
+	});
+}
+
+type PaginatedPage = {
+	data: Array<CollectionEntry<"blog">>;
+	currentPage: number;
+	lastPage: number;
+};
+
+const { page } = Astro.props as { page: PaginatedPage };
+const items = page.data.map((post: any) => ({
+	title: post.data.title,
+	href: getPostHref(post),
+	date: post.data.pubDate,
+	description: post.data.description,
+	image: post.data.image,
+	imageAlt: post.data.imageAlt,
+}));
+---
+
+<Layout title="漂流探索" description="探索遊戲開發與 AI 工具的個人部落格">
+	<section class="p-10">
+		<div class="space-y-20">
+			<PostCardList items={items} />
+			<Pagination
+				currentPage={page.currentPage}
+				totalPages={page.lastPage}
+				basePath="/"
+				pagePath="/page"
+			/>
+		</div>
+	</section>
+</Layout>

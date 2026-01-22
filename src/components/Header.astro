@@ -1,0 +1,44 @@
+---
+import Logo from "../components/Logo.astro";
+import { CATEGORIES } from "../config";
+import PostSearch from "./PostSearch.astro";
+const currentPath = Astro.url.pathname;
+---
+
+<header class="px-10 py-4 space-y-6">
+	<nav class="flex items-center justify-between">
+		<a href="/" class="inline-flex items-center gap-x-2">
+			<Logo />
+			<h1 class="text-xs lg:text-sm">Design Drifter</h1>
+		</a>
+		<PostSearch />
+	</nav>
+	<ul class="text-xl flex gap-x-6">
+		<li
+			class:list={[
+				"duration-500",
+				currentPath === "/" || currentPath.startsWith("/page")
+					? "opacity-100"
+					: "opacity-60 hover:opacity-100",
+			]}
+		>
+			<a href="/">All</a>
+		</li>
+		{
+			Object.entries(CATEGORIES).map(([slug, name]) => {
+				const isActive =
+					currentPath === `/${slug}` || currentPath.startsWith(`/${slug}/`);
+				return (
+					<li
+						class:list={[
+							"duration-500",
+							isActive ? "opacity-100" : "opacity-60 hover:opacity-100",
+						]}
+					>
+						<a href={`/${slug}`}>{name}</a>
+					</li>
+				);
+			})
+		}
+	</ul>
+</header>
