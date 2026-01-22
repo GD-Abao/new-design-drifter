@@ -15,7 +15,10 @@ const displayDate = new Date(date);
 ---
 
 <article class="post-card">
-	<a href={href}>
+	<a
+		href={href}
+		class="hover:bg-zinc-100 dark:hover:bg-zinc-900 duration-300 p-6 rounded-xl block"
+	>
 		{
 			image && (
 				<div class="py-2">
@@ -36,7 +39,7 @@ const displayDate = new Date(date);
 			<h3>{title}</h3>
 			{
 				description && (
-					<p class="opacity-60 text-sm py-1 line-clamp-2">{description}</p>
+					<p class="opacity-60 text-sm py-1 line-clamp-3">{description}</p>
 				)
 			}
 		</div>
