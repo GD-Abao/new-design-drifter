@@ -13,6 +13,7 @@
 - [ ] 加入分頁功能
 - [ ] 加入搜尋 (Pagefind)
 - [ ] SEO 優化
+- [x] 設定外部連結自動開新視窗 (rehype-external-links)
 
 ## 分類
 
