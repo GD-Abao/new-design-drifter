@@ -3,7 +3,7 @@ title: "Godot 4.6 正式發布：Jolt 物理引擎、全新 IK 框架與 Modern 
 description: "Godot 4.6 已於 1 月 27 日正式登場！帶來了內建 Jolt 物理引擎、全新的反向運動學框架、Modern 編輯器主題，以及 LibGodot 嵌入式支援。這篇技術分析將帶你一覽所有關鍵更新。"
 category: "game"
 pubDate: 2026-01-30
-image: "https://cdn.design-drifter.com/drifter/697f89453cba2.webp"
+image: "https://cdn.design-drifter.com/drifter/697f91665421e.webp"
 imageAlt: "Godot 4.6 引擎介面示意圖"
 tags: ["Godot", "GameDev", "Jolt", "Open Source", "Engine", "IK"]
 draft: false
