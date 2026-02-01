@@ -23,7 +23,7 @@ const displayDate = new Date(date);
 			image && (
 				<div class="py-2">
 					<Image
-						class="object-cover rounded-xl"
+						class="object-cover rounded-xl aspect-video w-full"
 						src={image}
 						alt={imageAlt || title}
 						width={640}
@@ -37,11 +37,7 @@ const displayDate = new Date(date);
 				{displayDate.toLocaleDateString("zh-TW")}
 			</time>
 			<h3>{title}</h3>
-			{
-				description && (
-					<p class="opacity-60 text-sm py-1 line-clamp-3">{description}</p>
-				)
-			}
+			{description && <p class="opacity-60 text-sm py-1">{description}</p>}
 		</div>
 	</a>
 </article>
