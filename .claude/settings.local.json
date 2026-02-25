@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(head -50 /f/website/AstroJs/new-design-drifter/src/layouts/*.astro)"
+    ]
+  }
+}
